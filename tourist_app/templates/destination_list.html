@@ -1,0 +1,106 @@
+<!-- destination_list.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tourist Destinations</title>
+    <style>
+        /* Inline styles for basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #007bff;
+            padding: 10px;
+            color: white;
+            border-radius: 5px;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .header a {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .header a:hover {
+            background-color: #218838;
+        }
+        .destination {
+            background-color: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .destination img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+        .destination .actions {
+            margin-top: 10px;
+        }
+        .destination .actions form,
+        .destination .actions a {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .destination .actions .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .destination .actions .btn-delete {
+            background-color: #dc3545;
+        }
+        .destination .actions .btn:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Tourist Destinations</h1>
+            <a href="{% url 'destination_create' %}" class="btn">Add Destination</a>
+        </div>
+        {% for destination in destinations %}
+        <div class="destination">
+            <h2>{{ destination.name }}</h2>
+            {% if destination.image %}
+            <img src="{{ destination.image.url }}" alt="{{ destination.name }}">
+            {% endif %}
+            <p><strong>Description:</strong> {{ destination.description }}</p>
+            <p><strong>Location:</strong> {{ destination.location }}</p>
+            <p><strong>Rating:</strong> {{ destination.rating }}</p>
+            <p><strong>Established:</strong> {{ destination.established }}</p>
+            <div class="actions">
+                <a href="{% url 'destination_update' destination.pk %}" class="btn">Edit</a>
+                <form action="{% url 'destination_delete' destination.pk %}" method="POST" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-delete">Delete</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

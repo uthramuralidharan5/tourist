@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourist Destinations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+        }
+        main {
+            padding: 20px;
+        }
+        #destinations {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .destination {
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: calc(33.333% - 40px);
+            box-sizing: border-box;
+        }
+        .destination img {
+            max-width: 100%;
+            height: auto;
+        }
+        @media (max-width: 768px) {
+            .destination {
+                width: calc(50% - 20px);
+            }
+        }
+        @media (max-width: 480px) {
+            .destination {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tourist Destinations</h1>
+    </header>
+    <main>
+        <section id="destinations">
+            <h2>Destinations</h2>
+            {% for destination in destinations %}
+            <div class="destination">
+                <img src="{{ destination.image_url }}" alt="{{ destination.name }}">
+                <h3>{{ destination.name }}</h3>
+                <p>{{ destination.description }}</p>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+</body>
+</html>
